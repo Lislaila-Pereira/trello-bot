@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conectando ao Trello...</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Extrai o fragmento da URL (tudo após o #)
+        const fragment = window.location.hash.substring(1);
+        const params = new URLSearchParams(fragment);
+
+        // Obtém o token e o state (que é o user_id do Telegram)
+        const token = params.get("token");
+        const state = new URLSearchParams(window.location.search).get("state"); // Recupera state da query
+
+        if (token && state) {
+          // Envia os parâmetros para o servidor Flask
+          fetch("/trello-callback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token, state }),
+          })
+            .then((response) => response.text())
+            .then((message) => {
+              document.body.innerHTML = `<p>${message}</p>`;
+            })
+            .catch((error) => {
+              document.body.innerHTML = `<p>Erro: ${error.message}</p>`;
+            });
+        } else {
+          document.body.innerHTML = `<p>Erro: Token ou state não encontrados.</p>`;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <p>Processando conexão com o Trello...</p>
+  </body>
+</html>
