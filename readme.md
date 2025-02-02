@@ -69,6 +69,7 @@ Como o Trello precisa de uma URL pública para enviar o token de autenticação,
 
 3. Anote a URL gerada pelo Ngrok (ex.: `https://1234.ngrok.io`).
 4. Adicione essa URL ao **Power-Up** no Trello Developer Portal.
+5. Adicione essa URL ao main.py, em " REDIRECT_URL = "seu_link_aqui/trello-callback" "
 
 ### 4. **Estrutura do Projeto**
 
